@@ -1,0 +1,27 @@
+# Copyright 2024 Ross Light
+# SPDX-License-Identifier: MIT
+
+name: Build
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**'
+      - '!.github/**'
+      - '!.gitignore'
+      - '!.vscode/**'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+
+jobs:
+  nix-build:
+    name: nix build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: cachix/install-nix-action@v25
+      - name: Build
+        run: nix build
